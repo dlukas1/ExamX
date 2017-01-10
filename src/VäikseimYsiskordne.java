@@ -1,11 +1,13 @@
 
 public class VäikseimYsiskordne {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         System.out.println(lcm(35, 205)); // 30
     }
 
-    public static int lcm(int m, int n) {
+    public static int lcm(int m, int n)
+    {
         int yhine = 0;
         System.out.println(0 % m); // testimiseks
         System.out.println(0 % n); // testimiseks
@@ -16,9 +18,6 @@ public class VäikseimYsiskordne {
                 break;
             }
         }
-
         return yhine;
-
     }
-
 }

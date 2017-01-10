@@ -1,49 +1,58 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 
-/**
- * Created by Dmitry on 10.01.2017.
- */
-/*
-On antud positiivne täisarv m ning arvusüsteemi alus n (vahemikust 2 kuni
-        * 36). Kirjutada Java meetod arvu m esitamiseks n-süsteemis (tulemuseks on
-        * string, mis koosneb numbrimärkidest ja vajadusel ladina väiketähtedest).
-        *
-        * public static String toSysString (int m, int n)
-        * Example: toSysString (14, 4) == "32"*/
-public class tests {
-    public static void main(String[] args)
-    {
-        int algArv=10;
-        int loppBase = 2;
-        System.out.println(toSysString(algArv,loppBase));
-    }
+public class tests{
 
-    public static String toSysString (int algArv,int loppBase )
-    {
-        String loppArv = Integer.toString(algArv,loppBase);
-        return loppArv;
-    }
+    public static void main(String[] args) {
+        int[][] grades = new int[][] { { 1, 3, 5 }, { 3, 3, 5, 5 },{ 7, 3, 5 }, { 3, 5, 0 } };
+        int[] res = sortByAvg(grades); // {1,0}
+        for (int i = 0; i < res.length; i++) {
+            System.out.print(res[i] + " ");
+        }
+    } // main
 
-/* С диалогом:
+    public static int[] sortByAvg(int[][] g) {
+        // ridade keskmiste arvutamine ja uude massiivi lisamine
+        double[] unsortedAverage = new double[g.length];
 
-    public static void main(String[] args) throws Exception {
-        System.out.print("Введите число для конвертирования: ");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String sNum = br.readLine();
-        int i = Integer.parseInt(sNum);
-        System.out.print("Выберите основание новой системы счисления: ");
-        String sNu = br.readLine();
-        int q = Integer.parseInt(sNu);
-        System.out.println("В выбранной системе счисления " + i + " будет равно " + Integer.toString(i, q));
-    }*/
-    }
+        for (int i = 0; i < g.length; i++) {
+            double rowAverage = 0;
+            int rowSum = 0;
+            for (int j = 0; j < g[i].length; j++) {
+                rowSum += g[i][j];
+            }
+            rowAverage = (double) rowSum / g[i].length;
+            unsortedAverage[i] = rowAverage;
+        }
+
+        // loon uue massiivi kloonides unsortedAverage massiivi
+        double[] sortedAverage = (double[]) unsortedAverage.clone();
+
+        // sordin loodud massiivi sortedAverage
+        Arrays.sort(sortedAverage);
+
+        // kakkan võrdlema sortimata ja sorditud massiive
+        // massiiv sorditud indeksite hoidmiseksmis on kasvavas järjekorras
+        int[] increasingIndexes = new int[sortedAverage.length];
+        // int j = 0;
+        for (int i = 0; i < sortedAverage.length; i++) {
+            // kerin sortimata keskmised läbi tagant ettepoole
+            for (int j = unsortedAverage.length - 1; j > 0; j--) {
+                // kerin
+                if (sortedAverage[i] == unsortedAverage[j]) {
+                    increasingIndexes[i] = j;
+                    unsortedAverage[j] = -999;  // kui leian võrdsed mõlemas massiivis, siis muudan väärtuse ära, et ta järgmises läbikerimises ei segaks
+                    // kui on esimene võrdsed leitud, siis katkestab sortimata massiivi läbi kerimist
+                    break;
+                }
+            }
+        }
+        // keeran indeksimassiivi teistpidi
+        int[] decreasingIndexes = new int[increasingIndexes.length];
+        for (int i = 0; i < increasingIndexes.length; i++) {
+            decreasingIndexes[increasingIndexes.length - 1 - i] = increasingIndexes[i];
+        }
+        return decreasingIndexes;
+    } // sortByAvg
 
 
-
-
-
-
-
-
+}

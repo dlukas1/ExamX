@@ -10,9 +10,7 @@ import java.util.Arrays;
  *
  * Ühesõnaga, meetod peab väljastama massiivi kus on ridade indeksid järjestatud
  * nii, et esimenesena on kõige suurema keskmise hindega rea indeks jne.
- *
- * @author Ago Kytt
- *
+
  */
 public class YliopilastePingerida {
 
